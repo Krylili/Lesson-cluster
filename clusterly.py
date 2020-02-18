@@ -31,12 +31,6 @@ while line != "":
     
 del offsets[-1]
 
-# print the list
-print(offsets)
-
-# Have a test set of line numbers
-testlist = [5, 31, 8, 10, 22, 52, 100, 42, 90, 56, 6]
-
 # Get dataset for a certain offset in a file
 def getdataset(datafile: "File reference", offset: int) -> dict:
     # Jump to offset in datafile
@@ -57,12 +51,25 @@ def getdataset(datafile: "File reference", offset: int) -> dict:
     
     return dataset
     
+
+# Set up starting cluster
+startclusters = [[offsets[n]] for n in range(10)]
+
+# Function to calculate the distance between two elements
+def distfunction(offset1: int, offset2: int) -> int:
+    dataset1 = getdataset(datafile, offset1)
+    dataset2 = getdataset(datafile, offset2)
+    
+    return happy.levenshtein_distance(dataset1["sequence"],
+                                      dataset2["sequence"],
+                                      Damerau=True)
     
 
-# pull out the lines of this test set
-for lineno in testlist:
-    dataset = getdataset(datafile, offsets[lineno-1])
-    print(dataset)
     
+    
+    
+
+    
+
     
 
