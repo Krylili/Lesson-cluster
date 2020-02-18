@@ -53,9 +53,6 @@ def getdataset(datafile: "File reference", offset: int) -> dict:
     return dataset
     
 
-# Set up starting cluster
-startclusters = [[offsets[n]] for n in range(20)]
-
 # Function to calculate the distance between two elements
 def distfunction(offset1: int, offset2: int) -> int:
     dataset1 = getdataset(datafile, offset1)
@@ -65,12 +62,16 @@ def distfunction(offset1: int, offset2: int) -> int:
                                       dataset2["sequence"],
                                       Damerau=True)
     
+    
 # Function to return the sequence for a certain offset
 def labelfunction(clusterindex: int) -> str:
-    dataset = getdataset(datafile, offsets[clusterindex])
-    
+    dataset = getdataset(datafile, offsets[clusterindex])    
     return dataset["sequence"]
     
+
+# Set up starting cluster
+startclusters = [[offsets[n]] for n in range(20)]
+
 # Calculate matrix and show dendrogram
 Z = scihi.linkage(startclusters, method="single", metric=distfunction)
 scihi.dendrogram(Z, orientation="left", leaf_label_func=labelfunction)
