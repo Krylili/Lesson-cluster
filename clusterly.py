@@ -8,6 +8,7 @@ Created on Thu Dec  5 12:19:43 2019
 
 import happy
 import scipy.cluster.hierarchy as scihi
+import matplotlib.pyplot as plt
 
 filename = "results100.csv"
 
@@ -64,6 +65,10 @@ def distfunction(offset1: int, offset2: int) -> int:
                                       dataset2["sequence"],
                                       Damerau=True)
     
+# Calculate matrix and show dendrogram
+Z = scihi.linkage(startclusters, method="single", metric=distfunction)
+scihi.dendrogram(Z, orientation="left")
+plt.show()
 
     
     
