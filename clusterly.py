@@ -37,11 +37,32 @@ print(offsets)
 # Have a test set of line numbers
 testlist = [5, 31, 8, 10, 22, 52, 100, 42, 90, 56, 6]
 
+# Get dataset for a certain offset in a file
+def getdataset(datafile: "File reference", offset: int) -> dict:
+    # Jump to offset in datafile
+    datafile.seek(offset)
+    
+    # Read line into a string
+    line = datafile.readline()
+    
+    # Split elments of line into a list
+    elements = line.split("\t")
+    
+    # Keys of the dictionary
+    keys = ["datasetid", "seq_id", "seq_len", "sequence",
+            "quality_score", "quality_seq"]
+    
+    dataset = dict(zip(keys, elements))
+    dataset.update({"offset": offset})
+    
+    return dataset
+    
+    
+
 # pull out the lines of this test set
 for lineno in testlist:
-    datafile.seek(offsets[lineno-1])
-    line = datafile.readline()
-    print(line[0:30])
+    dataset = getdataset(datafile, offsets[lineno-1])
+    print(dataset)
     
     
 
