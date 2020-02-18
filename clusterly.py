@@ -7,7 +7,7 @@ Created on Thu Dec  5 12:19:43 2019
 """
 
 import happy
-import csv
+import scipy.cluster.hierarchy as scihi
 
 filename = "results100.csv"
 
